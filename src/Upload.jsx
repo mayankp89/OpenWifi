@@ -23,7 +23,7 @@ function Upload() {
 
 
   return (
-    <div class="cont">
+    <div className="cont">
       <div className="Upload">
         <h1 className="text-danger">Know your floor plan</h1>
 
@@ -34,7 +34,7 @@ function Upload() {
           }}
         />
 
-        <button type="button" class="btn btn-outline-success" onClick={uploadFile}>Upload</button>
+        <button type="button" className="btn btn-outline-success" onClick={uploadFile}>Upload</button>
         <img src={imageUrls} />
       </div>
       <Link className="Next" to = "/upload/select_support_plan"> <h1 className="Next_color"> Next </h1> </Link>

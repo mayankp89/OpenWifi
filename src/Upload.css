@@ -39,3 +39,15 @@
     width: 300px;
     margin: 10px;
   }
+  .Next{
+    background-color: #3e4fae; /* Green */
+    border: none;
+    color: white;
+    padding: 2px 3px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 26px;
+    border-radius: 4px;
+    transition-duration: 0.4s;
+  }
