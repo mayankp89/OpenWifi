@@ -5,15 +5,18 @@ import { storage } from "./firebase";
 import { v4 } from "uuid";
 import "./Upload.css";
 import { Link } from "react-router-dom";
+import { actionCreators } from './state/index';
+import {useDispatch} from 'react-redux';
 
 function Upload() {
+  const dispatch = useDispatch();
   const [imageUpload, setImageUpload] = useState(null);
   const [imageUrls, setImageUrls] = useState();
   const [length,setLength]=useState(null);
   const [width,setWidth]=useState(null);
   const [area,setArea]=useState(null);
   const [cntfloor,setCntFloor]=useState(null);
-
+  let No_of_device = 4
   const uploadFile = () => {
     if (imageUpload == null) return;
     const imageRef = ref(storage, `images/${imageUpload.name + v4()}`);
@@ -84,7 +87,7 @@ function Upload() {
         <img src={imageUrls} />
       </div>
       <br/>
-      <Link  to = "/upload/select_support_plan"> <h1 className="Next_color"> <button type="button" class="btn btn-outline-success" >Next</button> </h1> </Link>
+      <Link to = "/upload/heatmap"> <h1 className="Next_color"> <button type="button" class="btn btn-outline-success" >Next</button> </h1> </Link>
     </div>
   );
 }

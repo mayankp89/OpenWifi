@@ -4,11 +4,13 @@ import "./Plans.css"
 import Planbox from "./Planbox";
 import {useDispatch} from 'react-redux';
 import { actionCreators } from './state/index';
+import Progress from "./Progress";
 function Selectplan() {
     const dispatch = useDispatch();
     return (
         <div>
               {/* <h1>{amount}</h1> */}
+              <Progress done="0"/>
             <h1>Select a Plan</h1>
             <div className="selectPlan">
                 <Link className="Remove_txt_deco" to="/upload" onClick={()=>{dispatch(actionCreators.depositMoney(1000))}}> <Planbox Plan="Pro Wireless" Price="$1,000 / Year" Feature_1 = "Latest Radio Technology" Feature_2 = "Advance Features"/> </Link>
