@@ -5,6 +5,7 @@ import Progress from "./Progress";
 import { useLocation } from 'react-router-dom'
 import { Link } from "react-router-dom";
 
+
 function Plans() {
   const amount = useSelector(state => state.amount)
   const location = useLocation()
@@ -24,7 +25,7 @@ function Plans() {
               </div>
               <div className="annual-plan">
                 <div className="plan-image">
-                  <img src="https://seeklogo.com/images/W/wireless-icon-logo-DD6F730CD9-seeklogo.com.png" alt="Music icon" />
+                  <img src=" https://seeklogo.com/images/W/wireless-icon-logo-DD6F730CD9-seeklogo.com.png" alt="Wireless icon" />
                 </div>
                 <div className="plan-price">
                   <h4>Annual Plan</h4>
