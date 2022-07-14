@@ -1,36 +1,32 @@
 import { useState } from "react";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import { ref ,uploadBytes, getDownloadURL, } from "firebase/storage";
-import { storage,database} from "./firebase";
+import { ref, uploadBytes, getDownloadURL, } from "firebase/storage";
+import { storage, database } from "./firebase";
 import { v4 } from "uuid";
 import "./Upload.css";
 import { Link } from "react-router-dom";
-
-import {ref as ref_database,set} from "firebase/database" ;
-
+import { ref as ref_database, set } from "firebase/database";
 import Progress from "./Progress";
 import { actionCreators } from './state/index';
-import {useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom'
 
 
 function Upload() {
- 
+
   const [imageUpload, setImageUpload] = useState(null);
   const [imageUrls, setImageUrls] = useState();
-  const [length,setLength]=useState(null);
-  const [width,setWidth]=useState(null);
-  const [area,setArea]=useState(null);
-  const [cntfloor,setCntFloor]=useState(null);
-  const Write=async()=>{
-    set(ref_database(database,"/users"),{
-      length,
-      width,
-      area,
-      cntfloor,
-      imageUrls
-    })
-  }
+  const [length, setLength] = useState(null);
+  const [width, setWidth] = useState(null);
+  const [area, setArea] = useState(null);
+  const [cntfloor, setCntFloor] = useState(null);
+  const [budget, setBudget] = useState(null);
+  const [xy, setXy] = useState({
+    x: "",
+    y: ""
+  });
+
+  const [coordinate, setCoordinate] = useState([]);
 
   const uploadFile = () => {
     if (imageUpload == null) return;
@@ -41,16 +37,47 @@ function Upload() {
       });
     });
   };
+  const Write = async () => {
+    set(ref_database(database, "/users"), {
+      length,
+      width,
+      area,
+      cntfloor,
+      imageUrls,
+      budget,
+      coordinate
+    })
+  }
+  const changexy = (event) => {
+
+
+    let name = event.target.name;
+    let value = event.target.value.replace(/\D/g, '');
+
+    setXy({ ...xy, [name]: value });
+  }
+
+  const AddOrdinate = () => {
+
+    coordinate.push(xy);
+    setCoordinate(coordinate)
+
+    setXy({
+      x: "",
+      y: ""
+    })
+  }
+
   const location = useLocation()
   const { Plan, price } = location.state;
   return (
-    
-    <div class="cont">
-      <div style={{position:"relative", left:"0px"}}><Progress done="20"/></div>
+
+    <div className="cont">
+    <Progress done="20"/>
       <div className="Upload">
-        <h1 className=" fl">Upload floor plan</h1>
+        <h1 className=" fl">Upload floor plans</h1>
         <input
-        className="txtinput"
+          className="txtinput"
           type="number"
           placeholder="Length(m)"
           value={length}
@@ -59,8 +86,8 @@ function Upload() {
           }}
         />
 
-      <input
-        className="txtinput"
+        <input
+          className="txtinput"
           type="text"
           placeholder="Width(m)"
           value={width}
@@ -68,9 +95,9 @@ function Upload() {
             setWidth(event.target.value.replace(/\D/g, ''));
           }}
         />
-      
-      <input
-        className="txtinput"
+
+        <input
+          className="txtinput"
           type="text"
           placeholder="Area(in m^2)"
           value={area}
@@ -81,7 +108,7 @@ function Upload() {
 
 
         <input
-        className="txtinput"
+          className="txtinput"
           type="text"
           placeholder="Count of Floor"
           value={cntfloor}
@@ -90,22 +117,50 @@ function Upload() {
           }}
         />
 
-       
+        <input
+          className="txtinput"
+          type="number"
+          placeholder="Approximated budget(INR)"
+          value={budget}
+          onChange={(event) => {
+            setBudget(event.target.value.replace(/\D/g, ''));
+          }}
+        />
+        <div className="coordinate">
+          <input
+            className="coordinate_x"
+            type="number"
+            name="x"
+            placeholder="x"
+            value={xy.x}
+            onChange={changexy}
 
+          />
+          <input
+
+            type="number"
+            name="y"
+            placeholder="y"
+            value={xy.y}
+            onChange={changexy}
+          />
+          <button onClick={AddOrdinate} type="button" class="btn btn-primary " >Add+  </button>
+          {/* <span class="hovertext" data-hover="click add after each x,y coordinate to store coordinates in array">
+            <i class="fa fa-lightbulb-o"></i>
+          </span> */}
+          </div>
         <input
           type="file"
           onChange={(event) => {
             setImageUpload(event.target.files[0]);
           }}
         />
-       
-
+        <br />
         <button type="button" class="btn btn-outline-success" onClick={uploadFile}>imageUpload</button>
         <img src={imageUrls} />
-        {/* <button type="button" class="btn btn-outline-success" onClick={Write}>save data</button> */}
       </div>
-      <br/>
-      <Link to = "/upload/heatmap"  onClick={Write} state={{ Plan: Plan, price:price }} > <h1 className="Next_color"> <button type="button" class="btn btn-outline-success" >Next</button> </h1> </Link>
+      <br />
+      <Link to="/upload/heatmap" onClick={Write} state={{ Plan: Plan, price: price }}> <h1 className="Next_color"> <button type="button" class="btn btn-outline-success" >Next</button> </h1> </Link>
     </div>
   );
 }

@@ -41,6 +41,7 @@ const Heatmap = () => {
                         <h1>Team A Algo</h1>
                         <p className="price_heatmap2">Price : ${amount * (No_of_devices1)}</p>
                         <p>Signal Strength : Strong</p>
+                        <p>Number of Access Points : {No_of_devices1}</p>
 
                     </Link>
                 </div>
@@ -51,6 +52,7 @@ const Heatmap = () => {
                         <h1>Team B Algo</h1>
                         <p className="price_heatmap2">Price : ${amount * (No_of_devices2)}</p>
                         <p>Signal Strength : Poor</p>
+                        <p>Number of Access Points : {No_of_devices2}</p>
 
                     </Link>
                 </div>
